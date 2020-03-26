@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      screen_generator|screen:
+        enabled: true
+builders:
+  screen:
+    target: ":screen_generator"
+    import: "package:seecovid/core/screen/screen_generator/lib/builder.dart"
+    builder_factories: ["screenGenerator"] 
+    build_extensions: {".dart": [".screen.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
