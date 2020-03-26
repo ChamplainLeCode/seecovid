@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# Seecovid
+
+To execute this code you should first run following commands
+- flutter pub get
+- ./kari run
+
+To get more information about [Kari](https://github.com/ChamplainLeCode/kari)
