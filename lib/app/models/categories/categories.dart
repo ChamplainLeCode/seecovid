@@ -1,0 +1,6 @@
+
+class Categories
+{
+  int idcategorie;
+
+}
