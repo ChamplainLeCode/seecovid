@@ -1,99 +1,88 @@
- 
-
 import 'dart:async';
 
 import "package:flutter/material.dart";
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:seecovid/app/components/DashedLoader.dart';
+import 'package:seecovid/app/components/S19RaisedButton.dart';
+import 'package:seecovid/app/components/S19Scaffold.dart';
+import 'package:seecovid/app/utils/Styles.dart';
 import "package:seecovid/core/core.dart";
-import 'package:seecovid/core/routes/Router.dart';
+
 
 @Screen("splash")
 class SplashScreen extends StatefulWidget{
-
-  static List<ImageProvider> images;
-
-  static initImage(){
-    images = List();
-    images.add(AssetImage("images/splash/cov1.jpg"));
-    images.add(AssetImage("images/splash/cov2.jpg"));
-    images.add(AssetImage("images/splash/cov3.jpg"));
-  }
 
    @override
    _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  
-  @override
+
+    StreamController<double> opacityStream;
+
+    @override
   void initState() {
-      super.initState();
+    opacityStream = StreamController();
+    super.initState();
   }
 
-  dispose(){
-    pageController.dispose();
-    canCall = false;
-    print('destruction');
+  @override
+  void dispose() {
+    opacityStream?.close();
     super.dispose();
   }
 
-  PageController pageController = PageController();
-  int currentPage = 0, inc = 1;
-  bool canCall = true;
 
     @override
     Widget build(BuildContext context) {  
-
-      return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            PageView(
-              children: getBackgroundImage(),
-              controller: pageController,
-            ),
-            Container(
-            //  color: Colors.white.withOpacity(0.6),
-              child: Center(
-                child: FloatingActionButton(
-                  onPressed: () => Router.goto("/sample", parameter: context),
-                  backgroundColor: Colors.black.withOpacity(0.4),
-                  child: Icon(Icons.arrow_forward, color: Colors.white,), 
-                  hoverColor: Colors.red,  
-                ),
-              ),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-          ],
-        )
-      );
-    }
-
-    List<Widget> getBackgroundImage(){
-      List<Widget> backgroundImages = <Container>[];
-      SplashScreen.images?.forEach((img)=> backgroundImages.add(Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: img,
-            fit: BoxFit.cover
-          )
+      Future.delayed(Duration(seconds: 1)).then((_){
+        opacityStream.add(1);
+      });
+      return S19Scaffold(
+      /*  appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Image(
+            image: Style.genrale.logo,
+            height: 30,
+          ),
         ),
-      )));
-      swipe();
-      return backgroundImages;
+      */
+        body:  Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StreamBuilder(
+              stream: opacityStream.stream,
+              builder: (_, snap) => AnimatedOpacity(
+                child: Image(
+                  image: Style.genrale.logo,
+                  width: MediaQuery.of(context).size.width/2,
+                ),
+                duration: Duration(seconds: 1),
+                opacity: snap.data,
+                curve: Curves.easeInCirc,
+                onEnd: start,
+              ),
+              initialData: .0,
+            ),
+
+            S19RaisedButton(
+              icon: MdiIcons.squareEditOutline,
+              text: "Register",
+//              colors: [Style.genrale.primary, Style.genrale.primary[]],
+              textColor: Style.genrale.red,
+              )
+            //DashedLoader()
+
+          ]
+        ),
+      ); 
     }
 
-    void swipe()async{ 
-      if(!canCall)
-        return;
+    void start() async {
+      
       await Future.delayed(Duration(seconds: 3));
-      try{
-        pageController.animateToPage(currentPage+=inc, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-      }on Exception{}
-      print("Current  = $currentPage");
-      inc = currentPage == 2 ? -1 : currentPage == 0 ? 1 : inc;
-      swipe();
+      print("Start App");
     }
-  
-
 }
