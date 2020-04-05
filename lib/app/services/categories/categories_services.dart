@@ -20,18 +20,13 @@ class CategoriesServices implements ServicesInterfaces<Categories>{
   @override
   Categories createFromJson(Map<String, dynamic> map)
   {
-     return Categories(
-      nomcategorie: map['nomcategorie']
-    );
+     return Categories();
   }
 
   @override
   Categories createFromJsonWithId(Map<String, dynamic> map) {
   
-    return Categories(
-      idcategorie: map['idcategorie'],
-      nomcategorie: map['nomcategorie']
-    );
+    return Categories();
   }
 
   @override
@@ -49,15 +44,14 @@ class CategoriesServices implements ServicesInterfaces<Categories>{
   Map<String,dynamic > getJSon(Categories categorie) {
     
     return{
-      'nomcategorie':categorie.nomcategorie
+      
     } ;
   }
 
   @override
   Map<String,dynamic> getJsonWithId(Categories categorie) {
     return {
-      'nomcategorie':categorie.nomcategorie,
-      'idcategorie':categorie.idcategorie
+      
     };
   }
 

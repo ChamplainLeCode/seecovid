@@ -66,15 +66,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               initialData: .0,
             ),
-
-            S19RaisedButton(
-              icon: MdiIcons.squareEditOutline,
-              text: "Register",
-//              colors: [Style.genrale.primary, Style.genrale.primary[]],
-              textColor: Style.genrale.red,
-              )
-            //DashedLoader()
-
           ]
         ),
       ); 

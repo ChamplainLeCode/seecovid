@@ -6,7 +6,6 @@ import 'dart:core';
 
 
 class ServicesInterfaces<type>{
-  String _tablename;
   Future<int> addToLocal(type objet)async{ return 0;}
   Future<int> addToOnline(type objet)async{return 0;}
   
